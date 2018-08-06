@@ -37,7 +37,7 @@ plt.show()
 ```
 * analyze top k words in each class using histogram (hashtag in tweets)
 ```python
-hashtag_lst = []
+hashtag_lst = [] # words list
 a = nltk.FreqDist(hashtag_lst)
 d = pd.DataFrame({'Hashtag': list(a.keys()),
                   'Count': list(a.values())})
@@ -46,5 +46,5 @@ d = d.nlargest(columns="Count", n = k)
 plt.figure(figsize=(16,5))
 ax = sns.barplot(data=d, x= "Hashtag", y = "Count")
 ax.set(ylabel = 'Count')
-plt.show(
+plt.show()
 ```
