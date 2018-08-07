@@ -1,0 +1,13 @@
+
+*Use start.sh instead of supervisord
+The trick is to change few parameters on gunicorn_conf.py as below (example):
+workers = 5
+bind = '0.0.0.0:8080'    # change to 8080 if deploy to K8S
+reload = False
+daemon = False           # this must be set as false or docker will treat process dies
+timeout = 30
+preload_app = True
+threads = 4
+pidfile = 'gunicorn.pid'
+accesslog = '-'              # write guicorn logs to stdout when deploy to K8S
+errorlog = '-'                # write guicorn logs to stdout when deploy to K8S
