@@ -1,4 +1,4 @@
-1.problem: " UnicodeEncodeError: 'ascii' codec can't encode characters in position 56-57: ordinal not in range(128) " in Python3
+### problem: " UnicodeEncodeError: 'ascii' codec can't encode characters in position 56-57: ordinal not in range(128) " in Python3
   solution: 
   1.1 check sys.stdout.encoding:
   ```
@@ -18,4 +18,11 @@
   sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
   # print logs
   sys.stdout.write("log message...")
+  ```
+  
+### problem: docker里无法使用中文
+  solution:
+  进入container时使用
+  ```
+  docker exec -it CONTAINER env LANG=C.UTF-8 bash
   ```
