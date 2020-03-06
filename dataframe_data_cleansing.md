@@ -76,3 +76,22 @@ def convert_str_datetime(df):
     '''
     df.insert(loc=2, column='timestamp', value=pd.to_datetime(df.transdate, format='%Y-%m-%d %H:%M:%S.%f')) 
 ```
+
+9. 根據label多數投票去重：
+```Python
+def deduplicates(df, by:str, label_names:list, label_col='label'):
+    def majority_vote(labels):
+        label_candis =  label_names
+        label_counts = [labels.count(l) for l in label_candis]
+
+        label_idx = np.argmax(label_counts)
+        label =label_candis[label_idx]
+        max_count = label_counts.pop(label_idx)
+        if np.prod([x-max_count for x in label_counts]) == 0:
+            label = 'conflict'
+        return label
+
+    real_label_mapping = df.groupby(by=by)[label_col].apply(lambda l: majority_vote(l.tolist())).to_dict()
+    real_label = df[by].map(real_label_mapping.get).tolist()
+    return real_label
+```
